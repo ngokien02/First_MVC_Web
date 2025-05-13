@@ -11,7 +11,7 @@ using WebBanHang.Models;
 namespace WebBanHang.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250513061439_KhoiTao")]
+    [Migration("20250513075018_KhoiTao")]
     partial class KhoiTao
     {
         /// <inheritdoc />
@@ -36,7 +36,6 @@ namespace WebBanHang.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("Name")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -60,7 +59,6 @@ namespace WebBanHang.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ImageUrl")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")

@@ -7,11 +7,19 @@
 namespace WebBanHang.Migrations
 {
     /// <inheritdoc />
-    public partial class AddData : Migration
+    public partial class ThemDuLieu : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.AlterColumn<string>(
+                name: "Description",
+                table: "Products",
+                type: "nvarchar(max)",
+                nullable: true,
+                oldClrType: typeof(string),
+                oldType: "nvarchar(max)");
+
             migrationBuilder.InsertData(
                 table: "Categories",
                 columns: new[] { "Id", "DisplayOrder", "Name" },
@@ -119,6 +127,16 @@ namespace WebBanHang.Migrations
                 table: "Categories",
                 keyColumn: "Id",
                 keyValue: 2);
+
+            migrationBuilder.AlterColumn<string>(
+                name: "Description",
+                table: "Products",
+                type: "nvarchar(max)",
+                nullable: false,
+                defaultValue: "",
+                oldClrType: typeof(string),
+                oldType: "nvarchar(max)",
+                oldNullable: true);
         }
     }
 }

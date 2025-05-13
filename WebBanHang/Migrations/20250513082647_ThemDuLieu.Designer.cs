@@ -11,8 +11,8 @@ using WebBanHang.Models;
 namespace WebBanHang.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250513063615_AddData")]
-    partial class AddData
+    [Migration("20250513082647_ThemDuLieu")]
+    partial class ThemDuLieu
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
