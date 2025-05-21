@@ -49,12 +49,18 @@
 </table>
 <div class="d-flex justify-content-center mt-3">
 	<ul class="pagination">
+		<li class="page-item @(ViewBag.CurrentPage == 1? "disabled" : "")">
+			<a class="page-link" href="?page=1">&laquo;</a>
+		</li>
 		@for (int i = 1; i <= ViewBag.TotalPages; i++)
 		{
 			<li class="page-item @(ViewBag.CurrentPage == i ? "active" : "")">
 				<a class="page-link" href="?page=@i">@i</a>
 			</li>
 		}
+		<li class="page-item @(ViewBag.CurrentPage == ViewBag.TotalPages? "disabled" : "")">
+			<a class="page-link" href="?page=@ViewBag.TotalPages">&raquo;</a>
+		</li>
 	</ul>
 </div>
 

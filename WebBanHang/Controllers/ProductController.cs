@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using WebBanHang.Models;
 using static System.Net.Mime.MediaTypeNames;
 
@@ -39,15 +40,14 @@ namespace WebBanHang.Controllers
 			return View();
 		}
 		[HttpPost]
-		public IActionResult Add(Product p, IFormFile ImageUrl)
+		public IActionResult Add(Product p, IFormFile imgFile)
 		{
 			if (ModelState.IsValid)
 			{
-				if (ImageUrl != null)
+				if (imgFile != null)
 				{
-					p.ImageUrl = SaveImage(ImageUrl);
+					p.ImageUrl = SaveImage(imgFile);
 				}
-
 				_db.Products.Add(p);
 				_db.SaveChanges();
 				TempData["success"] = "Thêm sản phẩm thành công";
@@ -128,7 +128,8 @@ namespace WebBanHang.Controllers
 				Value = x.Id.ToString(),
 				Text = x.Name
 			});
-			return View("index");
+			return View(product);
+		
 		}
 		public IActionResult Delete(int id)
 		{
