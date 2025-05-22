@@ -12,8 +12,7 @@ namespace WebBanHang.Models
         public string? Description { get; set; }
         [Range(0, 10000000000)]
         public double Price { get; set; }
-        [Required(ErrorMessage ="Chua chon loai")]
-        public int CategoryId { get; set; }
+        public int? CategoryId { get; set; }
         //khai báo mối kết hợp 1-n
         [ForeignKey("CategoryId")]
         public virtual Category? Category { set; get; } //khai báo mối kết hợp 1 - nhiều

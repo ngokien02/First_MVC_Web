@@ -7,7 +7,7 @@
 namespace WebBanHang.Migrations
 {
     /// <inheritdoc />
-    public partial class LuocDo_Data : Migration
+    public partial class Test : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)

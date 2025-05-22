@@ -1,9 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using WebBanHang.Models;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace WebBanHang.Controllers
 {
