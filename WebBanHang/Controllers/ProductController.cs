@@ -40,13 +40,13 @@ namespace WebBanHang.Controllers
 			return View();
 		}
 		[HttpPost]
-		public IActionResult Add(Product p, IFormFile imgFile)
+		public IActionResult Add(Product p)
 		{
 			if (ModelState.IsValid)
 			{
-				if (imgFile != null)
+				if (p.ImgFile != null)
 				{
-					p.ImageUrl = SaveImage(imgFile);
+					p.ImageUrl = SaveImage(p.ImgFile);
 				}
 				_db.Products.Add(p);
 				_db.SaveChanges();
@@ -90,15 +90,15 @@ namespace WebBanHang.Controllers
 			return View(product);
 		}
 		[HttpPost, ActionName("Update")]
-		public IActionResult Update(Product product, IFormFile ImageUrl)
+		public IActionResult Update(Product product)
 		{
 			if (ModelState.IsValid) //kiem tra hop le
 			{
 				var existingProduct = _db.Products.Find(product.Id);
-				if (ImageUrl != null)
+				if (product.ImgFile != null)
 				{
 					//xu ly upload và lưu ảnh đại diện mới
-					product.ImageUrl = SaveImage(ImageUrl);
+					product.ImageUrl = SaveImage(product.ImgFile);
 					//xóa ảnh cũ (nếu có)
 					if (!string.IsNullOrEmpty(existingProduct.ImageUrl))
 					{

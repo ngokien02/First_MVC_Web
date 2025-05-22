@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Diagnostics.CodeAnalysis;
 
 namespace WebBanHang.Models
 {
@@ -17,5 +18,7 @@ namespace WebBanHang.Models
         [ForeignKey("CategoryId")]
         public virtual Category? Category { set; get; } //khai báo mối kết hợp 1 - nhiều
         public string? ImageUrl { get; set; }
+        [NotMapped]
+        public IFormFile? ImgFile { get; set; }
     }
 }
