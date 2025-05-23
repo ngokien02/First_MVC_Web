@@ -14,7 +14,7 @@ namespace WebBanHang.Controllers
 		public IActionResult Index()
 		{
 			var listCategory = _db.Categories.OrderBy(c => c.DisplayOrder).ToList();
-			return View(listCategory);
+			return PartialView("Index", listCategory);
 		}
 		//Hiển thị form thêm mới chủng loại
 		public IActionResult Add()
@@ -63,29 +63,11 @@ namespace WebBanHang.Controllers
 		public Boolean DeleteConfirm(int id)
 		{
 			var category = _db.Categories.Find(id);
+
 			if (category == null)
 			{
 				return false;
 			}
-
-			//foreach (var p in _db.Products)
-			//{
-			//	if (p.CategoryId == id)
-			//	{
-			//		TempData["Error"] = "Đã có sản phẩm thuộc thể loại này, không thể xóa!";
-			//		return RedirectToAction("index");
-			//	}
-			//}
-
-			//var findProduct = from x in _db.Products 
-			//				  where x.CategoryId == id 
-			//				  select x;
-
-			//if (findProduct.Any())
-			//{
-			//	TempData["Error"] = "Đã có sản phẩm thuộc thể loại này, không thể xóa!";
-			//	return RedirectToAction("index");
-			//}
 
 			if (_db.Products.Where(x => x.CategoryId == id).ToList().Count() > 0)
 			{
