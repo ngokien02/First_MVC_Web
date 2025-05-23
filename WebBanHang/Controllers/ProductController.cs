@@ -26,7 +26,7 @@ namespace WebBanHang.Controllers
 				.ToList();
 			ViewBag.TotalPages = (int)Math.Ceiling((double)totalProducts / pageSize);
 			ViewBag.CurrentPage = page;
-			return View(productList);
+			return PartialView("PagedProducts", productList);
 		}
 		public IActionResult Add()
 		{
@@ -129,22 +129,14 @@ namespace WebBanHang.Controllers
 			return View(product);
 		
 		}
-		public IActionResult Delete(int id)
+
+		[HttpPost]
+		public Boolean DeleteConfirm(int id)
 		{
 			var product = _db.Products.Find(id);
 			if (product == null)
 			{
-				return NotFound();
-			}
-			return View(product);
-		}
-		[HttpPost, ActionName("Delete")]
-		public IActionResult DeleteConfirmed(int id)
-		{
-			var product = _db.Products.Find(id);
-			if (product == null)
-			{
-				return NotFound();
+				return false;
 			}
 			// xoá hình cũ của sản phẩm
 			if (!String.IsNullOrEmpty(product.ImageUrl))
@@ -159,8 +151,7 @@ namespace WebBanHang.Controllers
 			_db.Products.Remove(product);
 			_db.SaveChanges();
 			//chuyen den action index
-			TempData["DeleteSuccess"] = "Xóa sản phẩm thành công!";
-			return RedirectToAction("Index");
+			return true;
 		}
 	}
 }

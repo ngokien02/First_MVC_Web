@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-	<title>@ViewData["Title"] - WebBanHang</title>
+	<title>@ViewData["Title"] - AYPHONES</title>
 	@* <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" /> *@
 	<link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
 	<link rel="stylesheet" href="~/css/style.css" asp-append-version="true" />
@@ -25,10 +25,10 @@
 							<a class="nav-link @IsActive("Home", "Index")" asp-area="" asp-controller="Home" asp-action="Index">Trang chủ</a>
 						</li>
 						<li class="nav-item">
-							<a class="nav-link @IsActive("Product", "Index")" asp-area="" asp-controller="Product" asp-action="Index">Quản lý sản phẩm</a>
+							<a class="pagedProducts nav-link @IsActive("Product", "Index")" href="/Product?Page=1">Quản lý sản phẩm</a>
 						</li>
 						<li class="nav-item">
-							<a class="nav-link @IsActive("Category", "Index")" asp-area="" asp-controller="Category" asp-action="Index">Quản lý thể loại</a>
+							<a class="nav-link @IsActive("Category", "Index")" asp-controller="Category" asp-action="Index">Quản lý thể loại</a>
 						</li>
 					</ul>
 				</div>
@@ -36,17 +36,13 @@
 		</nav>
 	</header>
 
-	<div class="container">
+	<div class="container contents">
 		<main role="main" class="pb-3">
 			@RenderBody()
 		</main>
 	</div>
 
-	<div class="text-center">
-		<button type="button" class="btn btn-secondary btn-lg showMoreBtn">Hiển thị thêm</button>
-	</div>
-
-	<footer class="border-top footer text-muted mt-5">
+	<footer class="border-top footer text-muted mt-3">
 		<hr />
 
 		<input id="productCount" type="hidden" value="@ViewBag.ProductCount" />
@@ -58,36 +54,6 @@
 	<script src="~/lib/jquery/dist/jquery.min.js"></script>
 	@* <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script> *@
 	<script src="~/js/site.js" asp-append-version="true"></script>
-	<script>
-		//particles
-		particlesJS.load('particles-js', './particles.json', function () {
-			console.log('callback - particles.js config loaded');
-		});
-
-		//showmore button
-		const take = 3;
-		let skip = 0;
-		var productCount = $("#productCount").val();
-		var divCount = 0;
-
-		function loadMore() {
-			$.get("/Home/LoadMore", { skip: skip, take: take }, function (data) {
-				$(".productList").append(data);
-				skip += take;
-				divCount = $(".productList .productCard").length;
-				if (divCount == productCount) {
-					$(".showMoreBtn").hide();
-				}
-			});
-		};
-
-		$(document).ready(function () {
-			loadMore();
-			$(".showMoreBtn").on("click", function () {
-				loadMore();
-			});
-		});
-	</script>
 	@await RenderSectionAsync("Scripts", required: false)
 	@functions {
 		public string IsActive(string ctrl, string act = "")
@@ -102,5 +68,52 @@
 			return "";
 		}
 	}
+	<script>
+		$(document).ready(function () {
+			//xu ly phan trang san pham
+			$(".navbar-collapse").on("click", "a.pagedProducts", function (e) {
+				e.preventDefault();
+				var urlPagedProducts = $(this).attr("href");
+				$.get(urlPagedProducts, function (data) {
+					$(".contents").html(data);
+				})
+			});
+
+			$(".contents").on("click", "a.page-link", function (e) {
+				e.preventDefault();
+				var urlPagedProducts = $(this).attr("href");
+				$.get(urlPagedProducts, function (data) {
+					$(".contents").html(data);
+				})
+			});
+
+			//xu ly xoa san pham
+			$(".contents").on("click", "button.btnDelete", function () {
+				var id = $(this).attr("Id");
+				var _this = $(this);
+				Swal.fire({
+					title: "Xác nhận xóa",
+					text: "Bạn có chắc muốn xóa sản phẩm này?",
+					icon: "warning",
+					showCancelButton: true,
+					cancelButtonText: "Hủy",
+					confirmButtonColor: "#3085d6",
+					cancelButtonColor: "#d33",
+					confirmButtonText: "Xóa"
+				}).then((result) => {
+					if (result.isConfirmed) {
+						$.post("/Product/DeleteConfirm", { Id: id }, function (data) {
+							if (data) {
+								var rowDelete = _this.closest("tr");
+								rowDelete.remove();
+								$('#thongBao').html("Đã xóa thành công 1 sản phẩm");
+							}
+							else $('#thongBao').html("Xóa thất bại, vui lòng liên hệ đội ngũ hỗ trợ");;
+						});
+					}
+				});
+			});
+		});
+	</script>
 </body>
 </html>

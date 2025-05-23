@@ -1,0 +1,72 @@
+﻿@model List<Product>;
+
+<partial name="_Notification" />
+
+<div class="row mb-4">
+	<div class="col-md-6">
+		<h2>DANH MỤC SẢN PHẨM</h2>
+	</div>
+	<div class="col-md-6 text-right">
+		<a asp-action="Add" class="btn btn-secondary">
+			<i class="bi bi-plus-circle-fill"></i> Thêm mới
+		</a>
+	</div>
+</div>
+
+<div class="productPanel">
+	<table class="table table-bordered table-striped table-primary">
+		<thead>
+			<tr>
+				<th>Tên</th>
+				<th>Giá</th>
+				<th>Loại</th>
+				<th>Ảnh</th>
+				<th>Tùy chọn</th>
+			</tr>
+		</thead>
+		<tbody>
+			@foreach (var x in Model)
+			{
+				<tr>
+					<td>@x.Name</td>
+					<td>@x.Price</td>
+					<td>@(x.Category != null ? x.Category.Name : "")</td>
+					<td>
+						@if (x.ImageUrl != null)
+						{
+							<img src="@x.ImageUrl" style="width:100px" />
+						}
+					</td>
+					<td>
+						<a asp-action="Update" asp-route-id="@x.Id" class="btn btn-outline-info bg-dark manageBtn">
+							<i class="bi bi-pencil-square"></i> Sửa
+						</a>
+						<button Id="@x.Id" class="btn btn-outline-danger bg-dark manageBtn btnDelete">
+							<i class="bi bi-trash"></i> Xóa
+						</button>
+					</td>
+				</tr>
+			}
+		</tbody>
+	</table>
+</div>
+
+<div class="d-flex justify-content-center mt-3">
+	<ul class="pagination">
+		<li class="page-item @(ViewBag.CurrentPage == 1? "disabled" : "")">
+			<a class="page-link" href="/Product?page=1">&laquo;</a>
+		</li>
+		@for (int i = 1; i <= ViewBag.TotalPages; i++)
+		{
+			<li class="page-item @(ViewBag.CurrentPage == i ? "active" : "")">
+				<a class="page-link" href="/Product?page=@i">@i</a>
+			</li>
+		}
+		<li class="page-item @(ViewBag.CurrentPage == ViewBag.TotalPages? "disabled" : "")">
+			<a class="page-link" href="/Product?page=@ViewBag.TotalPages">&raquo;</a>
+		</li>
+	</ul>
+</div>
+
+<p id="thongBao" style="font-size: x-large; color:white;"></p>
+

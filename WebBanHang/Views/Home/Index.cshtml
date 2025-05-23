@@ -21,7 +21,42 @@
 
 <section id="products">
 	<div class="row productList">
-
 	</div>
 </section>
 
+<div class="text-center mt-5">
+	<button type="button" class="btn btn-secondary btn-lg showMoreBtn">Hiển thị thêm</button>
+</div>
+
+@section Scripts {
+	<script>
+		//particles
+		particlesJS.load('particles-js', './particles.json', function () {
+			console.log('callback - particles.js config loaded');
+		});
+
+		//showmore button
+		const take = 6;
+		let skip = 0;
+		var productCount = $("#productCount").val();
+		var divCount = 0;
+
+		function loadMore() {
+			$.get("/Home/LoadMore", { skip: skip, take: take }, function (data) {
+				$(".productList").append(data);
+				skip += take;
+				divCount = $(".productList .productCard").length;
+				if (divCount == productCount) {
+					$(".showMoreBtn").hide();
+				}
+			});
+		};
+
+		$(document).ready(function () {
+			loadMore();
+			$(".showMoreBtn").on("click", function () {
+				loadMore();
+			});
+		});
+	</script>
+}
