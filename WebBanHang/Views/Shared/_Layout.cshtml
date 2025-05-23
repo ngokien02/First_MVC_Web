@@ -4,7 +4,7 @@
 	<meta charset="utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	<title>@ViewData["Title"] - WebBanHang</title>
-	<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+	@* <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" /> *@
 	<link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
 	<link rel="stylesheet" href="~/css/style.css" asp-append-version="true" />
 	<link rel="stylesheet" href="~/css/navbar.css" asp-append-version="true" />
@@ -22,38 +22,85 @@
 				<div class="collapse navbar-collapse" id="navbarColor01">
 					<ul class="navbar-nav me-auto">
 						<li class="nav-item">
-							<a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">Trang chủ</a>
+							<a class="nav-link @IsActive("Home", "Index")" asp-area="" asp-controller="Home" asp-action="Index">Trang chủ</a>
 						</li>
 						<li class="nav-item">
-							<a class="nav-link" asp-area="" asp-controller="Product" asp-action="Index">Quản lý sản phẩm</a>
+							<a class="nav-link @IsActive("Product", "Index")" asp-area="" asp-controller="Product" asp-action="Index">Quản lý sản phẩm</a>
 						</li>
 						<li class="nav-item">
-							<a class="nav-link" asp-area="" asp-controller="Category" asp-action="Index">Quản lý thể loại</a>
+							<a class="nav-link @IsActive("Category", "Index")" asp-area="" asp-controller="Category" asp-action="Index">Quản lý thể loại</a>
 						</li>
 					</ul>
 				</div>
 			</div>
 		</nav>
 	</header>
+
 	<div class="container">
 		<main role="main" class="pb-3">
 			@RenderBody()
 		</main>
 	</div>
 
+	<div class="text-center">
+		<button type="button" class="btn btn-secondary btn-lg showMoreBtn">Hiển thị thêm</button>
+	</div>
+
 	<footer class="border-top footer text-muted mt-5">
+		<hr />
+
+		<input id="productCount" type="hidden" value="@ViewBag.ProductCount" />
+
 		<div class="container mt-3 mb-3">
 			&copy; 2025 - AYPHONES - <a asp-area="" asp-controller="Home" asp-action="Privacy">Điều khoản dịch vụ</a>
 		</div>
 	</footer>
 	<script src="~/lib/jquery/dist/jquery.min.js"></script>
-	<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+	@* <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script> *@
 	<script src="~/js/site.js" asp-append-version="true"></script>
 	<script>
+		//particles
 		particlesJS.load('particles-js', './particles.json', function () {
 			console.log('callback - particles.js config loaded');
 		});
+
+		//showmore button
+		const take = 3;
+		let skip = 0;
+		var productCount = $("#productCount").val();
+		var divCount = 0;
+
+		function loadMore() {
+			$.get("/Home/LoadMore", { skip: skip, take: take }, function (data) {
+				$(".productList").append(data);
+				skip += take;
+				divCount = $(".productList .productCard").length;
+				if (divCount == productCount) {
+					$(".showMoreBtn").hide();
+				}
+			});
+		};
+
+		$(document).ready(function () {
+			loadMore();
+			$(".showMoreBtn").on("click", function () {
+				loadMore();
+			});
+		});
 	</script>
 	@await RenderSectionAsync("Scripts", required: false)
+	@functions {
+		public string IsActive(string ctrl, string act = "")
+		{
+			var routeData = ViewContext.RouteData.Values;
+			var currentCtrl = routeData["controller"]?.ToString();
+			var currentAct = routeData["action"]?.ToString();
+
+			if (currentCtrl == ctrl && (string.IsNullOrEmpty(act) || currentAct == act))
+				return "active";
+
+			return "";
+		}
+	}
 </body>
 </html>

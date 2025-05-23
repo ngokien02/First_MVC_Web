@@ -1,6 +1,9 @@
 ﻿.particles {
     background-color: var(--color-main);
-    background-image: url("../images/bg-hero.jpg");
+    background-image: url("../images/bg-orange.jpg");
+    background-repeat:no-repeat;
+    background-size:contain;
+    background-position:center;
     position: relative;
     min-height: 500px;
     padding: 10px;
@@ -12,11 +15,16 @@
         align-items: center;
     }
 
+    .particles h3 {
+        text-shadow: 0 0 9px #fff;
+        margin-top: 130px;
+    }
+
     .particles h2 {
         color: #ffffff;
         text-align: center;
         text-shadow: 0 0 9px #fff;
-        margin-top:150px;
+        margin-top:20px;
         font-size: 50px;
     }
 
@@ -52,3 +60,23 @@
     height: 100%;
 }
 
+table, th, td {
+    border: 0.3px solid !important;
+}
+
+.productCard {
+    transition:all 0.3s;
+}
+
+.productCard:hover {
+    transform:scale(1.05);
+}
+
+.manageBtn {
+    transition:all 0.3s!important;
+}
+
+.manageBtn:hover {
+    background-color:white!important;
+    color:black!important;
+}

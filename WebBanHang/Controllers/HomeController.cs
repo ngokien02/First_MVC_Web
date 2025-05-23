@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
 using WebBanHang.Models;
 
@@ -19,8 +20,19 @@ namespace WebBanHang.Controllers
 
 		public IActionResult Index()
         {
-            var productList = _db.Products.ToList();
-            return View(productList);
+			ViewBag.ProductCount = _db.Products.Count();
+			return View();
+        }
+        [HttpGet]
+        public IActionResult LoadMore(int skip = 0, int take = 3)
+        {
+            var products = _db.Products
+                .Include(p => p.Category)
+                .OrderByDescending(p => p.Price)
+                .Skip(skip)
+                .Take(take)
+                .ToList();
+            return PartialView("PartialProducts", products);
         }
 
         public IActionResult Privacy()

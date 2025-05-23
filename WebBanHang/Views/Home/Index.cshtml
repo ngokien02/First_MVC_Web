@@ -9,8 +9,9 @@
 		<div class="row overflow-hidden">
 			<div class="col-md-12 col-lg-12 text-center text-white aos-init aos-animate"
 				 data-aos="fade-right" data-aos-delay="50">
-				<h2 class="title-hero text-white text-uppercase text-neon">
-					ĐẠI LÝ AI PHÔN GIÁ SIÊU RẺ
+				<h3 class="title-hero text-white text-uppercase text-neon">WELCOME TO AYPHONES</h3>
+				<h2 class="title-hero text-white text-uppercase text-neon" style="font-weight:700;">
+					CỬA HÀNG AI PHÔN GIÁ SIÊU RẺ
 				</h2>
 			</div>
 		</div>
@@ -19,25 +20,8 @@
 </section>
 
 <section id="products">
-	<div class="row">
-		@foreach (var p in Model)
-		{
-			<div class="col-4">
-				<div class="card m-1">
-					<div class="card-body">
-						<h5 class="card-title">@p.Name</h5>
-					</div>
-					@if (p.ImageUrl != null)
-					{
-						<img src="@p.ImageUrl" class="card-img-top container" alt="@p.Name" style="height: 250px; object-fit: contain;">
-					}
-					<div class="card-body text-center">
-						<a href="#" class="btn btn-info">Chi tiết</a>
-						<a href="#" class="btn btn-success">Thêm vào giỏ</a>
-					</div>
-				</div>
-			</div>
-		}
+	<div class="row productList">
+
 	</div>
 </section>
 
