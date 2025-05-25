@@ -1,0 +1,52 @@
+﻿@model List<SelectListItem>
+
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<div class="modal-dialog modal-lg">
+		<div class="modal-content">
+
+			<form id="addProductForm" enctype="multipart/form-data">
+				<div class="modal-header">
+					<h5 class="modal-title" id="exampleModalLabel">Thêm mới sản phẩm</h5>
+					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Đóng"></button>
+				</div>
+
+				<div class="modal-body">
+					<div class="mb-3">
+						<label for="Name" class="form-label">Tên sản phẩm</label>
+						<input type="text" name="Name" class="form-control" />
+						<span id="errName" class="text-danger small"></span>
+					</div>
+					<div class="mb-3">
+						<label for="Description" class="form-label">Mô tả</label>
+						<textarea name="Description" class="form-control"></textarea>
+					</div>
+					<div class="mb-3">
+						<label for="Price" class="form-label">Giá</label>
+						<input type="number" name="Price" class="form-control" />
+						<span id="errPrice" class="text-danger small"></span>
+					</div>
+					<div class="mb-3">
+						<label for="CategoryId" class="form-label">Loại</label>
+						<select name="CategoryId" class="form-control">
+							<option disabled selected>== Chọn thể loại ==</option>
+							@foreach (var item in Model)
+							{
+								<option value="@item.Value">@item.Text</option>
+							}
+						</select>
+					</div>
+					<div class="mb-3">
+						<label for="ImgFile" class="form-label">Ảnh minh họa</label>
+						<input type="file" name="ImgFile" class="form-control" />
+					</div>
+				</div>
+
+				<div class="modal-footer">
+					<button type="submit" class="btn btn-primary">Lưu</button>
+					<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Thoát</button>
+				</div>
+			</form>
+
+		</div>
+	</div>
+</div>

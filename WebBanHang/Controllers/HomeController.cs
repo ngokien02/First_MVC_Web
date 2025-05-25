@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
 using WebBanHang.Models;
@@ -21,6 +22,11 @@ namespace WebBanHang.Controllers
 		public IActionResult Index()
         {
 			ViewBag.ProductCount = _db.Products.Count();
+            ViewData["Categories"] = _db.Categories.Select(x => new SelectListItem
+            {
+                Text = x.Name,
+                Value = x.Id.ToString()
+            }).ToList();
 			return View();
         }
         [HttpGet]

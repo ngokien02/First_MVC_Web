@@ -28,15 +28,7 @@ namespace WebBanHang.Controllers
 			ViewBag.CurrentPage = page;
 			return PartialView("PagedProducts", productList);
 		}
-		public IActionResult Add()
-		{
-			ViewBag.CategoryList = _db.Categories.Select(x => new SelectListItem
-			{
-				Value = x.Id.ToString(),
-				Text = x.Name
-			});
-			return View();
-		}
+
 		[HttpPost]
 		public IActionResult Add(Product p)
 		{
