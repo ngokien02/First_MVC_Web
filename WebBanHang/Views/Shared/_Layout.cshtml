@@ -59,6 +59,7 @@
 	<script src="~/js/site.js" asp-append-version="true"></script>
 
 	@await Html.PartialAsync("../Product/_AddProductModal", ViewData["Categories"])
+	@await Html.PartialAsync("../Category/_AddCategoryModal", ViewData["Categories"])
 	@await RenderSectionAsync("Scripts", required: false)
 
 	@functions {
@@ -77,7 +78,11 @@
 	<script>
 		$(document).ready(function () {
 			//xu ly modal
-			$('#exampleModal').on('shown.bs.modal', function () {
+			$('#addProductModal').on('shown.bs.modal', function () {
+				$('#myInput').trigger('focus');
+			});
+
+			$('#addCategoryModal').on('shown.bs.modal', function () {
 				$('#myInput').trigger('focus');
 			});
 

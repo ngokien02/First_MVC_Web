@@ -16,11 +16,6 @@ namespace WebBanHang.Controllers
 			var listCategory = _db.Categories.OrderBy(c => c.DisplayOrder).ToList();
 			return PartialView("Index", listCategory);
 		}
-		//Hiển thị form thêm mới chủng loại
-		public IActionResult Add()
-		{
-			return View();
-		}
 		// Xử lý thêm chủng loại mới
 		[HttpPost]
 		public IActionResult Add(Category category)
