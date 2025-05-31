@@ -1,10 +1,12 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using WebBanHang.Models;
 
 namespace WebBanHang.Controllers
 {
+	[Authorize(Roles = SD.Role_Admin)]
 	public class ProductController : Controller
 	{
 		private readonly ApplicationDbContext _db;
@@ -26,11 +28,11 @@ namespace WebBanHang.Controllers
 				.ToList();
 			ViewBag.TotalPages = (int)Math.Ceiling((double)totalProducts / pageSize);
 			ViewBag.CurrentPage = page;
-			return PartialView("PagedProducts", productList);
+			return PartialView("Index", productList);
 		}
 
 		[HttpPost]
-		public IActionResult Add(Product p)
+		public Boolean Add(Product p)
 		{
 			if (ModelState.IsValid)
 			{
@@ -40,9 +42,8 @@ namespace WebBanHang.Controllers
 				}
 				_db.Products.Add(p);
 				_db.SaveChanges();
-				TempData["success"] = "Thêm sản phẩm thành công";
 
-				return RedirectToAction("Index");
+				return true;
 
 			}
 			ViewBag.CategoryList = _db.Categories.Select(x => new SelectListItem
@@ -50,7 +51,7 @@ namespace WebBanHang.Controllers
 				Value = x.Id.ToString(),
 				Text = x.Name
 			});
-			return View();
+			return false;
 		}
 		private string SaveImage(IFormFile img)
 		{
@@ -119,7 +120,7 @@ namespace WebBanHang.Controllers
 				Text = x.Name
 			});
 			return View(product);
-		
+
 		}
 
 		[HttpPost]

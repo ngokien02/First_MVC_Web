@@ -21,16 +21,18 @@
 					<a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">AYPHONES</a>
 					<ul class="navbar-nav me-auto">
 						<li class="nav-item">
-							<a class="nav-link @IsActive("Home", "Index")" asp-area="" asp-controller="Home" asp-action="Index">Trang chủ</a>
+							<a class="nav-link active" asp-area="" asp-controller="Home" asp-action="Index">Trang chủ</a>
 						</li>
 						<li class="nav-item">
-							<a class="pagedProducts nav-link @IsActive("Product", "Index")" href="/Product?Page=1">Quản lý sản phẩm</a>
+							<a class="pagedProducts nav-link" href="/Product?page=1">Quản lý sản phẩm</a>
 						</li>
 						<li class="nav-item">
-							<a class="categories nav-link @IsActive("Category", "Index")" href="/Category">Quản lý thể loại</a>
+							<a class="categories nav-link" href="/Category">Quản lý thể loại</a>
 						</li>
 					</ul>
+
 					<partial name="_LoginPartial" />
+
 				</div>
 			</div>
 		</nav>
@@ -48,126 +50,18 @@
 		<input id="productCount" type="hidden" value="@ViewBag.ProductCount" />
 
 		<div class="container mt-3 mb-3">
-			&copy; 2025 - AYPHONES - <a asp-area="" asp-controller="Home" asp-action="Privacy">Điều khoản dịch vụ</a>
+			&copy; 2025 - AYPHONES - <a asp-area="" asp-controller="Home" asp-action="Privacy">Điều khoản & Dịch vụ</a>
 		</div>
 	</footer>
 
 	<script src="~/lib/jquery/dist/jquery.min.js"></script>
 	<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
 	<script src="~/lib/bootstrap/dist/js/bootstrap.min.js"></script>
-	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 	<script src="~/js/site.js" asp-append-version="true"></script>
 
 	@await Html.PartialAsync("../Product/_AddProductModal", ViewData["Categories"])
 	@await Html.PartialAsync("../Category/_AddCategoryModal", ViewData["Categories"])
 	@await RenderSectionAsync("Scripts", required: false)
 
-	@functions {
-		public string IsActive(string ctrl, string act = "")
-		{
-			var routeData = ViewContext.RouteData.Values;
-			var currentCtrl = routeData["controller"]?.ToString();
-			var currentAct = routeData["action"]?.ToString();
-
-			if (currentCtrl == ctrl && (string.IsNullOrEmpty(act) || currentAct == act))
-				return "active";
-
-			return "";
-		}
-	}
-	<script>
-		$(document).ready(function () {
-			//xu ly modal
-			$('#addProductModal').on('shown.bs.modal', function () {
-				$('#myInput').trigger('focus');
-			});
-
-			$('#addCategoryModal').on('shown.bs.modal', function () {
-				$('#myInput').trigger('focus');
-			});
-
-			//xu ly phan trang san pham
-			$(document).on("click", "a.page-link, a.pagedProducts", function (e) {
-				e.preventDefault();
-				var url = $(this).attr("href");
-
-				if (url) {
-					$(".contents").fadeOut(100, function () {
-						$.get(url, function (data) {
-							$(".contents").fadeOut(100, function () {
-								$(".contents").html(data).fadeIn(100);
-							});
-						});
-					});
-				}
-			});
-
-			//xu ly ajax the loai
-			$(".categories").click(function (e) {
-				e.preventDefault();
-				var url = $(this).attr("href");
-
-				$.get(url, function (data) {
-					$(".contents").fadeOut(100, function () {
-						$(".contents").html(data).fadeIn(100);
-					})
-				})
-			});
-
-			//xu ly xoa san pham
-			$(".contents").on("click", "button.btnDeleteSP", function () {
-				var id = $(this).attr("Id");
-				var _this = $(this);
-				Swal.fire({
-					title: "Xác nhận xóa",
-					text: "Bạn có chắc muốn xóa sản phẩm này?",
-					icon: "warning",
-					showCancelButton: true,
-					cancelButtonText: "Hủy",
-					confirmButtonColor: "#3085d6",
-					cancelButtonColor: "#d33",
-					confirmButtonText: "Xóa"
-				}).then((result) => {
-					if (result.isConfirmed) {
-						$.post("/Product/DeleteConfirm", { Id: id }, function (data) {
-							if (data) {
-								var rowDelete = _this.closest("tr");
-								rowDelete.remove();
-								$('#thongBao').html("Đã xóa thành công 1 sản phẩm");
-							}
-							else $('#thongBao').html("Xóa thất bại, vui lòng liên hệ đội ngũ hỗ trợ");;
-						});
-					}
-				});
-			});
-
-			//xu ly xoa the loai
-			$(document).on("click", "button.btnDeleteTL", function (e) {
-				var id = $(this).attr("Id");
-				var _this = $(this);
-				Swal.fire({
-					title: "Xác nhận xóa",
-					text: "Bạn có chắc muốn xóa thể loại này?",
-					icon: "warning",
-					showCancelButton: true,
-					cancelButtonText: "Hủy",
-					confirmButtonColor: "#3085d6",
-					cancelButtonColor: "#d33",
-					confirmButtonText: "Xóa"
-				}).then((result) => {
-					if (result.isConfirmed) {
-						$.post("/Category/DeleteConfirm", { Id: id }, function (data) {
-							if (data) {
-								var rowDelete = _this.closest("tr");
-								rowDelete.remove();
-								$('#thongBao').html("Đã xóa thành công 1 thể loại");
-							}
-							else $('#thongBao').html("Đã có sản phẩm thuộc thể loại này, không thể xóa!");;
-						});
-					}
-				});
-			});
-		});
-	</script>
 </body>
 </html>

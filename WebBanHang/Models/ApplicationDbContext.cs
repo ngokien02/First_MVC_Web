@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace WebBanHang.Models
 {
-    public class ApplicationDbContext : IdentityDbContext<IdentityUser>
+    public class ApplicationDbContext : IdentityDbContext<Customer>
     {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
         {

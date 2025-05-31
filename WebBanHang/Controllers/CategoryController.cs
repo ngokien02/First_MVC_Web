@@ -1,8 +1,10 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using WebBanHang.Models;
 namespace WebBanHang.Controllers
 {
+	[Authorize(Roles = SD.Role_Admin)]
 	public class CategoryController : Controller
 	{
 		private readonly ApplicationDbContext _db;
@@ -18,17 +20,16 @@ namespace WebBanHang.Controllers
 		}
 		// Xử lý thêm chủng loại mới
 		[HttpPost]
-		public IActionResult Add(Category category)
+		public bool Add(Category category)
 		{
 			if (ModelState.IsValid) //kiem tra hop le
 			{
 				//thêm category vào table Categories
 				_db.Categories.Add(category);
 				_db.SaveChanges();
-				TempData["success"] = "Thêm thể loại thành công!";
-				return RedirectToAction("Index");
+				return true;
 			}
-			return View();
+			return false;
 		}
 		//Hiển thị form cập nhật chủng loại
 		public IActionResult Update(int id)
@@ -49,7 +50,6 @@ namespace WebBanHang.Controllers
 				//cập nhật category vào table Categories
 				_db.Categories.Update(category);
 				_db.SaveChanges();
-				TempData["success"] = "Cập nhật thể loại thành công!";
 				return RedirectToAction("Index");
 			}
 			return View();
