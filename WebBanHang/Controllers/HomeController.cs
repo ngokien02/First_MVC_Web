@@ -9,25 +9,25 @@ namespace WebBanHang.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-		private readonly ApplicationDbContext _db;
-		private readonly IWebHostEnvironment _hosting;
+        private readonly ApplicationDbContext _db;
+        private readonly IWebHostEnvironment _hosting;
 
-		public HomeController(ILogger<HomeController> logger, ApplicationDbContext db, IWebHostEnvironment hosting)
-		{
-			_logger = logger;
-			_db = db;
-			_hosting = hosting;
-		}
-
-		public IActionResult Index()
+        public HomeController(ILogger<HomeController> logger, ApplicationDbContext db, IWebHostEnvironment hosting)
         {
-			ViewBag.ProductCount = _db.Products.Count();
+            _logger = logger;
+            _db = db;
+            _hosting = hosting;
+        }
+
+        public IActionResult Index()
+        {
+            ViewBag.ProductCount = _db.Products.Count();
             ViewData["Categories"] = _db.Categories.Select(x => new SelectListItem
             {
                 Text = x.Name,
                 Value = x.Id.ToString()
             }).ToList();
-			return View();
+            return View();
         }
         [HttpGet]
         public IActionResult LoadMore(int skip = 0, int take = 3)

@@ -2,7 +2,7 @@
 
 namespace WebBanHang.Models
 {
-	public class Customer : IdentityUser
+	public class ApplicationUser : IdentityUser
 	{
 		public string HoTen {  get; set; }
 		public DateTime NgaySinh { get; set; }

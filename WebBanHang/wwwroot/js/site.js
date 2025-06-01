@@ -39,8 +39,8 @@ $(() => {
     });
 
     //bien toan cuc xu ly load trang
-    var urlSP = "/product?page=1";
-    var urlTL = "/category";
+    var urlSP = "/admin/product?page=1";
+    var urlTL = "/admin/category";
     let loadPage = (url) => {
         $.get(url, function (data) {
             $(".contents").fadeOut(100, function () {
@@ -57,7 +57,7 @@ $(() => {
 
         $.ajax({
             method: "POST",
-            url: "/Product/Add",
+            url: "/admin/Product/Add",
             data: formData,
 
             contentType: false,
@@ -84,7 +84,7 @@ $(() => {
 
         $.ajax({
             method: "POST",
-            url: "/Category/Add",
+            url: "/admin/Category/Add",
             data: formData,
 
             contentType: false,
@@ -151,7 +151,7 @@ $(() => {
             confirmButtonText: "Xóa"
         }).then((result) => {
             if (result.isConfirmed) {
-                $.post("/Product/DeleteConfirm", { Id: id }, function (data) {
+                $.post("/admin/Product/DeleteConfirm", { Id: id }, function (data) {
                     if (data) {
                         var rowDelete = _this.closest("tr");
                         rowDelete.remove();
@@ -178,7 +178,7 @@ $(() => {
             confirmButtonText: "Xóa"
         }).then((result) => {
             if (result.isConfirmed) {
-                $.post("/Category/DeleteConfirm", { Id: id }, function (data) {
+                $.post("/admin/Category/DeleteConfirm", { Id: id }, function (data) {
                     if (data) {
                         var rowDelete = _this.closest("tr");
                         rowDelete.remove();
@@ -189,4 +189,9 @@ $(() => {
             }
         });
     });
+
+    //$("a.shopping").on("click", function (e) {
+    //    e.preventDefault();
+        
+    //})
 });

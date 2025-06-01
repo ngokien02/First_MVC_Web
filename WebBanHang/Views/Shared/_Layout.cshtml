@@ -24,11 +24,17 @@
 							<a class="nav-link active" asp-area="" asp-controller="Home" asp-action="Index">Trang chủ</a>
 						</li>
 						<li class="nav-item">
-							<a class="pagedProducts nav-link" href="/Product?page=1">Quản lý sản phẩm</a>
+							<a class="shopping nav-link" asp-area="customer" asp-controller="shopping" asp-action="index">Mua sắm</a>
 						</li>
-						<li class="nav-item">
-							<a class="categories nav-link" href="/Category">Quản lý thể loại</a>
-						</li>
+						@if (User.IsInRole("Admin"))
+						{
+							<li class="nav-item">
+								<a class="pagedProducts nav-link" href="/Admin/Product?page=1">Quản lý sản phẩm</a>
+							</li>
+							<li class="nav-item">
+								<a class="categories nav-link" href="/Admin/Category">Quản lý thể loại</a>
+							</li>
+						}
 					</ul>
 
 					<partial name="_LoginPartial" />
@@ -50,7 +56,7 @@
 		<input id="productCount" type="hidden" value="@ViewBag.ProductCount" />
 
 		<div class="container mt-3 mb-3">
-			&copy; 2025 - AYPHONES - <a asp-area="" asp-controller="Home" asp-action="Privacy">Điều khoản & Dịch vụ</a>
+			&copy; 2025 - AYPHONES - <a href="#">Điều khoản & Dịch vụ</a>
 		</div>
 	</footer>
 
@@ -59,8 +65,8 @@
 	<script src="~/lib/bootstrap/dist/js/bootstrap.min.js"></script>
 	<script src="~/js/site.js" asp-append-version="true"></script>
 
-	@await Html.PartialAsync("../Product/_AddProductModal", ViewData["Categories"])
-	@await Html.PartialAsync("../Category/_AddCategoryModal", ViewData["Categories"])
+	@await Html.PartialAsync("~/areas/admin/views/product/_AddProductModal.cshtml", ViewData["Categories"])
+	@await Html.PartialAsync("~/areas/admin/views/category/_AddCategoryModal.cshtml", ViewData["Categories"])
 	@await RenderSectionAsync("Scripts", required: false)
 
 </body>

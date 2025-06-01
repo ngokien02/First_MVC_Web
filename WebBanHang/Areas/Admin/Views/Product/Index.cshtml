@@ -59,11 +59,11 @@
 		@for (int i = 1; i <= ViewBag.TotalPages; i++)
 		{
 			<li class="page-item @(ViewBag.CurrentPage == i ? "active" : "")">
-				<a class="page-link" href="/Product?page=@i">@i</a>
+				<a class="page-link" href="/admin/Product?page=@i">@i</a>
 			</li>
 		}
 		<li class="page-item @(ViewBag.CurrentPage == ViewBag.TotalPages? "disabled" : "")">
-			<a class="page-link" href="/Product?page=@ViewBag.TotalPages">&raquo;</a>
+			<a class="page-link" href="/admin/Product?page=@ViewBag.TotalPages">&raquo;</a>
 		</li>
 	</ul>
 </div>
