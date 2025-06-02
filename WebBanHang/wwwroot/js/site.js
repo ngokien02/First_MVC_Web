@@ -190,8 +190,13 @@ $(() => {
         });
     });
 
-    //$("a.shopping").on("click", function (e) {
-    //    e.preventDefault();
-        
-    //})
+
+    //xu ly trang shopping
+    $("li.categoryList").on("click", function (e) {
+        e.preventDefault();
+        var url = $(this).attr("href");
+        $.get(url, function (data) {
+            $(".productByCatId").html(data);
+        })
+    })
 });

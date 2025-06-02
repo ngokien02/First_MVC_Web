@@ -1,9 +1,9 @@
 ﻿.particles {
     background-color: var(--color-main);
     background-image: url("../images/bg-orange.jpg");
-    background-repeat:no-repeat;
-    background-size:contain;
-    background-position:center;
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
     position: relative;
     min-height: 500px;
     padding: 10px;
@@ -24,7 +24,7 @@
         color: #ffffff;
         text-align: center;
         text-shadow: 0 0 9px #fff;
-        margin-top:20px;
+        margin-top: 20px;
         font-size: 50px;
     }
 
@@ -65,18 +65,28 @@ table, th, td {
 }
 
 .productCard {
-    transition:all 0.3s;
+    transition: all 0.3s;
 }
 
-.productCard:hover {
-    transform:scale(1.05);
-}
+    .productCard:hover {
+        transform: scale(1.05);
+    }
 
 .manageBtn {
-    transition:all 0.3s!important;
+    transition: all 0.3s !important;
 }
 
-.manageBtn:hover {
-    background-color:white!important;
-    color:black!important;
+    .manageBtn:hover {
+        background-color: white !important;
+        color: black !important;
+    }
+
+.categoryList {
+    border: thin 2px;
+    transition: all 0.3s;
 }
+
+    .categoryList:hover {
+        background-color: #ea39b8;
+        cursor:pointer;
+    }
