@@ -23,9 +23,12 @@
 						<li class="nav-item">
 							<a class="nav-link active" asp-area="" asp-controller="Home" asp-action="Index">Trang chủ</a>
 						</li>
-						<li class="nav-item">
-							<a class="shopping nav-link" asp-area="customer" asp-controller="shopping" asp-action="index">Mua sắm</a>
-						</li>
+						@if (!User.IsInRole("Admin") && !User.IsInRole("Employee"))
+						{
+							<li class="nav-item">
+								<a class="shopping nav-link" asp-area="customer" asp-controller="shopping" asp-action="index">Mua sắm</a>
+							</li>
+						}
 						@if (User.IsInRole("Admin"))
 						{
 							<li class="nav-item">
