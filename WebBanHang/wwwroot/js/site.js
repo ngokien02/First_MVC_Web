@@ -38,6 +38,11 @@ $(() => {
         $(this).addClass('active');
     });
 
+    $(document).on('click', '.categoryList', function (e) {
+        $('.categoryList').removeClass('active');
+        $(this).addClass('active');
+    });
+
     //bien toan cuc xu ly load trang
     var urlSP = "/admin/product?page=1";
     var urlTL = "/admin/category";
