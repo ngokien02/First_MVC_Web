@@ -206,12 +206,17 @@ $(() => {
         })
     })
 
-    //xu ly the loai trang shopping
+    //xu ly chon the loai trang shopping
     $(document).on("click", ".categoryList", function (e) {
         e.preventDefault();
         var url = $(this).attr("href");
         $.get(url, function (data) {
+            if (data.trim() === "") {
+                $(".productByCatId").html("<h4>Hiện chưa có sản phẩm thuộc thể loại này. Chúng tôi sẽ cố gắng cập nhật sớm nhất.</h4>");
+                return;
+            }
             $(".productByCatId").html(data);
         })
     })
 });
+

@@ -9,15 +9,15 @@
 			<li class="bg-primary list-group-item d-flex justify-content-between align-items-center">DANH MỤC THỂ LOẠI</li>
 			@foreach (var c in categoryList)
 			{
-				<li class="list-group-item d-flex justify-content-between align-items-center categoryList" href="/customer/shopping/category?Id=@c.CategoryId">
-					@c.CategoryName
+				<li class="list-group-item d-flex justify-content-between align-items-center categoryList" href="/customer/shopping/category?Id=@c.Id">
+					@c.Name
 					<span class="badge text-bg-primary rounded-pill">@c.ProductCount</span>
 				</li>
 			}
 		</ul>
 	</div>
 
-	<div class="col-md-9 row productByCatId">
+	<div class="col-md-9 row productByCatId" id="productByCatId">
 		@foreach (var p in Model)
 		{
 			<div class="col-4 productCardByCatId text-center">

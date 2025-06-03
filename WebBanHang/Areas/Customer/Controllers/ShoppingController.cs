@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using WebBanHang.Areas.Customer.Models;
 using WebBanHang.Models;
 
 namespace WebBanHang.Areas.Customer.Controllers
@@ -18,23 +19,20 @@ namespace WebBanHang.Areas.Customer.Controllers
 		public IActionResult Index()
 		{
 			var categoryList = _db.Categories
-				.GroupJoin(_db.Products,
-				c => c.Id,
-				p => p.CategoryId,
-				(c, products) => new
+				.Select(c => new CategoryViewModel
 				{
-					CategoryId = c.Id,
-					CategoryName = c.Name,
-					c.DisplayOrder,
-					ProductCount = products.Count()
+					Id = c.Id,
+					Name = c.Name,
+					ProductCount = _db.Products.Where(p => p.CategoryId == c.Id).Count()
 				})
-				.OrderBy(c => c.DisplayOrder)
 				.ToList();
 			ViewBag.CategoryList = categoryList;
+
 			var productByCatId = _db.Products
 				.Where(p => p.CategoryId == 1)
 				.OrderByDescending(p => p.Price)
 				.ToList();
+
 			return PartialView("index", productByCatId);
 		}
 		public IActionResult Category(int id)
