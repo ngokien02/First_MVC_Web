@@ -33,6 +33,7 @@ namespace WebBanHang.Areas.Customer.Controllers
 			ViewBag.CategoryList = categoryList;
 			var productByCatId = _db.Products
 				.Where(p => p.CategoryId == 1)
+				.OrderByDescending(p => p.Price)
 				.ToList();
 			return View("index", productByCatId);
 		}
@@ -40,6 +41,7 @@ namespace WebBanHang.Areas.Customer.Controllers
 		{
 			var productByCatId = _db.Products
 				.Where(p => p.CategoryId == id)
+				.OrderByDescending(p => p.Price)
 				.ToList();
 			return PartialView("_ProductByCategoryIdPartial", productByCatId);
 		}
