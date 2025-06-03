@@ -191,8 +191,17 @@ $(() => {
     });
 
 
-    //xu ly trang shopping
-    $("li.categoryList").on("click", function (e) {
+    //xu ly ajax trang shopping
+    $("a.shopping").on("click", function (e) {
+        e.preventDefault();
+        var url = $(this).attr("href");
+        $.get(url, function (data) {
+            $(".contents").html(data);
+        })
+    })
+
+    //xu ly the loai trang shopping
+    $(document).on("click", ".categoryList", function (e) {
         e.preventDefault();
         var url = $(this).attr("href");
         $.get(url, function (data) {

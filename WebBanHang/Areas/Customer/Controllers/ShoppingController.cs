@@ -35,7 +35,7 @@ namespace WebBanHang.Areas.Customer.Controllers
 				.Where(p => p.CategoryId == 1)
 				.OrderByDescending(p => p.Price)
 				.ToList();
-			return View("index", productByCatId);
+			return PartialView("index", productByCatId);
 		}
 		public IActionResult Category(int id)
 		{

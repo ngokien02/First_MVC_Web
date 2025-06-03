@@ -26,7 +26,7 @@
 						@if (!User.IsInRole("Admin") && !User.IsInRole("Employee"))
 						{
 							<li class="nav-item">
-								<a class="shopping nav-link" asp-area="customer" asp-controller="shopping" asp-action="index">Mua sắm</a>
+								<a class="shopping nav-link" href="/customer/shopping">Mua sắm</a>
 							</li>
 						}
 						@if (User.IsInRole("Admin"))
