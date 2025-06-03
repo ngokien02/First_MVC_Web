@@ -202,6 +202,7 @@ $(() => {
         var url = $(this).attr("href");
         $.get(url, function (data) {
             $(".contents").html(data);
+            $("ul.categoriesList li:nth-child(2)").addClass("active");
         })
     })
 
