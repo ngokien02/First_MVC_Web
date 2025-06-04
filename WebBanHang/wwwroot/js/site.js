@@ -43,6 +43,18 @@ $(() => {
         $(this).addClass('active');
     });
 
+    //xu ly modal
+    $('#addProductModal').on('shown.bs.modal', function () {
+        $('#myInput').trigger('focus');
+    });
+
+    $('#addCategoryModal').on('shown.bs.modal', function () {
+        $('#myInput').trigger('focus');
+    });
+    $('#updateProductModal').on('shown.bs.modal', function () {
+        $('#myInput').trigger('focus');
+    });
+
     //bien toan cuc xu ly load trang
     var urlSP = "/admin/product?page=1";
     var urlTL = "/admin/category";
@@ -81,6 +93,46 @@ $(() => {
         });
     });
 
+    //xu ly hien modal cap nhat san pham
+    $(document).on("click", "#btnUpdateProduct", function () {
+        var url = $(this).attr("href");
+        $.get(url, function (data) {
+            $("#updateModalBody").html(data);
+        })
+    })
+
+    //xu ly cap nhat san pham
+    $(document).on("click", "#btnUpdateSP", function (e) {
+
+        e.preventDefault();
+        var updateForm = document.forms.updateProductForm;
+        var formData = new FormData(updateForm);
+
+        $.ajax({
+            method: "POST",
+            url: "/admin/product/update",
+            data: formData,
+
+            contentType: false,
+            processData: false,
+
+            success: function (data) {
+                if (data) {
+                    loadPage(urlSP);
+                }
+                else {
+                    Swal.fire({
+                        title: "Lỗi",
+                        text: "Cập nhật thất bại, vui lòng kiểm tra lại thông tin!",
+                        icon: "error"
+                    });
+                    const myModal = new bootstrap.Modal(document.getElementById('updateProductModal'));
+                    myModal.show();
+                }
+            }
+        });
+    });
+
     //xu ly them the loai
     document.getElementById("addCategoryForm").addEventListener("submit", function (e) {
 
@@ -106,15 +158,6 @@ $(() => {
                 }
             }
         });
-    });
-
-    //xu ly modal
-    $('#addProductModal').on('shown.bs.modal', function () {
-        $('#myInput').trigger('focus');
-    });
-
-    $('#addCategoryModal').on('shown.bs.modal', function () {
-        $('#myInput').trigger('focus');
     });
 
     //xu ly phan trang san pham
@@ -196,7 +239,7 @@ $(() => {
     });
 
 
-    //xu ly ajax trang shopping
+    //xu ly active trang shopping
     $("a.shopping").on("click", function (e) {
         e.preventDefault();
         var url = $(this).attr("href");

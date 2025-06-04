@@ -18,7 +18,7 @@
 		<thead>
 			<tr>
 				<th>Tên</th>
-				<th>Giá</th>
+				<th>Giá (VNĐ)</th>
 				<th>Loại</th>
 				<th>Ảnh</th>
 				<th>Tùy chọn</th>
@@ -29,7 +29,7 @@
 			{
 				<tr>
 					<td>@x.Name</td>
-					<td>@x.Price</td>
+					<td>@x.Price.ToString("N0")</td>
 					<td>@(x.Category != null ? x.Category.Name : "")</td>
 					<td>
 						@if (x.ImageUrl != null)
@@ -38,9 +38,9 @@
 						}
 					</td>
 					<td>
-						<a asp-action="Update" asp-route-id="@x.Id" class="btn btn-outline-info bg-dark manageBtn">
-							<i class="bi bi-pencil-square"></i> Sửa
-						</a>
+						<button href="/admin/product/update?id=@x.Id" id="btnUpdateProduct" type="button" class="btn btn-outline-info bg-dark manageBtn" data-bs-toggle="modal" data-bs-target="#updateProductModal">
+							<i class="bi bi-plus-circle-fill"></i> Sửa
+						</button>
 						<button Id="@x.Id" class="btn btn-outline-danger bg-dark manageBtn btnDeleteSP">
 							<i class="bi bi-trash"></i> Xóa
 						</button>
@@ -54,7 +54,7 @@
 <div class="d-flex justify-content-center mt-3">
 	<ul class="pagination">
 		<li class="page-item @(ViewBag.CurrentPage == 1? "disabled" : "")">
-			<a class="page-link" href="/Product?page=1">&laquo;</a>
+			<a class="page-link" href="/admin/Product?page=1">&laquo;</a>
 		</li>
 		@for (int i = 1; i <= ViewBag.TotalPages; i++)
 		{
@@ -70,3 +70,9 @@
 
 <p id="thongBaoXoaSP" style="font-size: x-large; color:white;"></p>
 
+<div class="modal fade" id="updateProductModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<div class="modal-dialog modal-lg">
+		<div class="modal-content" id="updateModalBody">
+		</div>
+	</div>
+</div>

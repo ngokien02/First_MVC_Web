@@ -1,0 +1,100 @@
+﻿@model Product
+
+<form id="updateProductForm" enctype="multipart/form-data">
+	<div class="row">
+		<div class="col-md-4">
+			@if (!string.IsNullOrEmpty(Model.ImageUrl))
+			{
+				<img src="/@Model.ImageUrl" class="card-img-top container ImgEdit" style="" id="previewImage" />
+			}
+		</div>
+		<div class="col-md-8">
+			<div class="modal-header">
+				<h5 class="modal-title" id="exampleModalLabel">Cập nhật sản phẩm</h5>
+				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Đóng"></button>
+			</div>
+
+			<div class="modal-body">
+				<input name="Id" type="hidden" value="@Model.Id" />
+				<div class="mb-3">
+					<label id="Name" for="Name" class="form-label">Tên sản phẩm</label>
+					<input type="text" name="Name" class="form-control" value="@Model.Name" />
+					<span id="errName" class="text-danger small"></span>
+				</div>
+				<div class="mb-3">
+					<label for="Description" class="form-label">Mô tả</label>
+					<textarea name="Description" class="form-control">@Model.Description</textarea>
+				</div>
+				<div class="mb-3">
+					<label for="Price" class="form-label">Giá</label>
+					<input type="number" name="Price" class="form-control" value="@Model.Price" />
+					<span id="errPrice" class="text-danger small"></span>
+				</div>
+				<div class="mb-3">
+					<label for="CategoryId" class="form-label">Loại</label>
+					<select asp-for="CategoryId" asp-items="@ViewBag.CategoriesEdit" class="form-control">
+					</select>
+				</div>
+				<div class="mb-3">
+					<label for="ImgFile" class="form-label">Ảnh minh họa</label>
+					<input type="file" name="ImgFile" class="form-control" />
+				</div>
+
+				<p id="thongBaoUpdate" style="font-size: x-large; margin-top:10px; margin-bottom:0;"></p>
+			</div>
+
+
+			<div class="modal-footer"> 
+				<button type="button" id="btnUpdateSP" class="btn btn-secondary" data-bs-dismiss="modal">Cập nhật</button>
+				<button type="button" class="btn btn-primary" data-bs-dismiss="modal">Thoát</button>
+			</div>
+		</div>
+	</div>
+</form>
+
+
+
+@* <form asp-action="Update" method="post" enctype="multipart/form-data">
+	<h2>Cập nhật sản phẩm</h2>
+	<hr />
+	<input asp-for="Id" type="hidden" />
+	<div class="row">
+		<div class="col-md-4">
+			@if (!string.IsNullOrEmpty(Model.ImageUrl))
+			{
+				<img src="/@Model.ImageUrl" style="width:300px" id="previewImage" />
+			}
+		</div>
+		<div class="col-md-8">
+			<div class="form-group pb-2">
+				<label>Tên sản phẩm</label>
+				<input asp-for="Name" class="form-control" />
+				<span asp-validation-for="Name" class="text-danger"></span>
+			</div>
+			<div class="form-group pb-2">
+				<label>Mô tả</label>
+
+<textarea asp-for="Description" class="form-control"></textarea>
+				<span asp-validation-for="Description" class="text-danger"></span>
+			</div>
+			<div class="form-group pb-2">
+				<label>Giá</label>
+				<input asp-for="Price" class="form-control" />
+				<span asp-validation-for="Price" class="text-danger"></span>
+			</div>
+			<div class="form-group pb-2">
+				<label>Thể loại</label>
+				<select asp-for="CategoryId" asp-items="@ViewBag.CategoryList" class="form-control">
+					<option disabled selected>=== Chọn thể loại ===</option>
+				</select>
+				<span asp-validation-for="CategoryId" class="text-danger"></span>
+			</div>
+			<div class="form-group pb-2">
+				<label>Ảnh minh họa</label>
+				<input type="file" name="ImgFile" class="form-control" />
+			</div>
+			<button type="submit" class="btnUpdate btn btn-primary"> Cập nhật </button>
+			<a href="/Home" class="btnHome btn btn-secondary">Về trang quản lý</a>
+		</div>
+	</div>
+</form> *@
