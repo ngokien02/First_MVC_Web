@@ -3,7 +3,7 @@
 @foreach (var p in Model)
 {
 	<div class="col-4 productCard text-center">
-		<div class="card m-1 bg-primary" style="border-radius:10px;">
+		<div class="card m-1 bg-secondary" style="border-radius:10px;">
 			<div class="card-body">
 				<h5 class="card-title">@p.Name</h5>
 			</div>
@@ -14,9 +14,9 @@
 			<p style="margin-top:1rem;">@p.Price.ToString("N0") vnđ</p>
 			<div class="card-body">
 				<a href="#" class="btn btn-secondary">Chi tiết</a>
-				<a href="#" class="btn btn-danger">Thêm vào giỏ</a>
+				<a class="addtocart btn btn-danger" data-productId="@p.Id" asp-action="AddToCart" asp-controller="Cart"
+				   asp-route-productId="@p.Id">Thêm vào giỏ</a>
 			</div>
 		</div>
 	</div>
 }
-

@@ -53,6 +53,11 @@
 		</main>
 	</div>
 
+
+	<div id="notification" style="display:none;" class="notification-fixed">
+		Thông báo đã được gửi!
+	</div>
+
 	<footer class="border-top footer text-muted mt-3">
 		<hr />
 
@@ -70,8 +75,6 @@
 
 	@await Html.PartialAsync("~/areas/admin/views/product/_AddProductModal.cshtml", ViewData["Categories"])
 	@await Html.PartialAsync("~/areas/admin/views/category/_AddCategoryModal.cshtml", ViewData["Categories"])
-	@* @await Html.PartialAsync("~/areas/admin/views/product/_UpdateProductModal.cshtml") *@
-
 
 	@await RenderSectionAsync("Scripts", required: false)
 

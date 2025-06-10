@@ -60,15 +60,11 @@
     height: 100%;
 }
 
-table, th, td {
-    border: 0.3px solid !important;
-}
-
-.productCard {
+.productCard, .productCardByCatId {
     transition: all 0.3s;
 }
 
-    .productCard:hover {
+    .productCard:hover, .productCardByCatId:hover {
         transform: scale(1.05);
     }
 
@@ -82,12 +78,12 @@ table, th, td {
     }
 
 .categoryList {
-    border: thin 2px;
+    color:black!important;
     transition: all 0.3s;
 }
 
     .categoryList:hover {
-        background-color: #ea39b8;
+        background-color: rgba(0, 0, 0, 0.1)!important;
         cursor: pointer;
     }
 
@@ -97,4 +93,17 @@ table, th, td {
     object-fit: contain;
     margin-top: 90px;
     padding-left:30px!important;
+}
+
+.notification-fixed {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    background-color: #28a745; /* xanh lá thành công */
+    color: white;
+    padding: 22px 30px;
+    border-radius: 6px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.2);
+    z-index: 9999;
+    font-size: 25px;
 }

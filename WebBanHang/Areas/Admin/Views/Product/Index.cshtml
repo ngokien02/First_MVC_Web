@@ -14,7 +14,7 @@
 </div>
 
 <div class="productPanel">
-	<table class="table table-bordered table-striped table-primary">
+	<table class="table table-bordered table-striped">
 		<thead>
 			<tr>
 				<th>Tên</th>
@@ -38,10 +38,10 @@
 						}
 					</td>
 					<td>
-						<button href="/admin/product/update?id=@x.Id" id="btnUpdateProduct" type="button" class="btn btn-outline-info bg-dark manageBtn" data-bs-toggle="modal" data-bs-target="#updateProductModal">
+						<button href="/admin/product/update?id=@x.Id" id="btnUpdateProduct" type="button" class="btn btn-primary manageBtn" data-bs-toggle="modal" data-bs-target="#updateProductModal">
 							<i class="bi bi-plus-circle-fill"></i> Sửa
 						</button>
-						<button Id="@x.Id" class="btn btn-outline-danger bg-dark manageBtn btnDeleteSP">
+						<button Id="@x.Id" class="btn btn-danger manageBtn btnDeleteSP">
 							<i class="bi bi-trash"></i> Xóa
 						</button>
 					</td>
