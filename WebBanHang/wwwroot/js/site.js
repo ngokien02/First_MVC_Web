@@ -72,25 +72,48 @@ $(() => {
         e.preventDefault();
         var formData = new FormData(this);
 
-        $.ajax({
-            method: "POST",
-            url: "/admin/Product/Add",
-            data: formData,
+        $("#errName").text('');
+        $("#errPrice").text('');
 
-            contentType: false,
-            processData: false,
+        const name = $('input[name="Name"]').val().trim();
+        const price = $('input[name="Price"]').val().trim();
 
-            success: function (data) {
-                if (data) {
-                    $("p#thongBaoSP").text("Thêm 1 sản phẩm thành công!");
-                    loadPage(urlSP);
-                    $("#addProductForm")[0].reset();
+        let isValid = true;
+
+        // Kiểm tra tên
+        if (name === "") {
+            $("#errName").text("Tên sản phẩm không được để trống");
+            isValid = false;
+        }
+
+        // Kiểm tra giá
+        if (price === "" || isNaN(price) || parseFloat(price) < 0) {
+            $("#errPrice").text("Giá phải là số và không được âm");
+            isValid = false;
+        }
+
+        if (isValid) {
+
+            $.ajax({
+                method: "POST",
+                url: "/admin/Product/Add",
+                data: formData,
+
+                contentType: false,
+                processData: false,
+
+                success: function (data) {
+                    if (data) {
+                        $("p#thongBaoSP").text("Thêm 1 sản phẩm thành công!");
+                        loadPage(urlSP);
+                        $("#addProductForm")[0].reset();
+                    }
+                    else {
+                        $("p#thongBaoSP").text("Thêm sản phẩm thất bại, vui lòng kiểm tra lại thông tin!");
+                    }
                 }
-                else {
-                    $("p#thongBaoSP").text("Thêm sản phẩm thất bại, vui lòng kiểm tra lại thông tin!");
-                }
-            }
-        });
+            });
+        }
     });
 
     //xu ly hien modal cap nhat san pham
@@ -108,29 +131,51 @@ $(() => {
         var updateForm = document.forms.updateProductForm;
         var formData = new FormData(updateForm);
 
-        $.ajax({
-            method: "POST",
-            url: "/admin/product/update",
-            data: formData,
+        $("#errNameUpdate").text('');
+        $("#errPriceUpdate").text('');
 
-            contentType: false,
-            processData: false,
+        const name = $('input[name="Name"]').val().trim();
+        const price = $('input[name="Price"]').val().trim();
 
-            success: function (data) {
-                if (data) {
-                    loadPage(urlSP);
+        let isValid = true;
+
+        if (isValid) {
+
+            $.ajax({
+                method: "POST",
+                url: "/admin/product/update",
+                data: formData,
+
+                contentType: false,
+                processData: false,
+
+                success: function (data) {
+                    if (data) {
+                        loadPage(urlSP);
+                    }
+                    else {
+                        Swal.fire({
+                            title: "Lỗi",
+                            text: "Cập nhật thất bại, vui lòng kiểm tra lại thông tin!",
+                            icon: "error"
+                        });
+                        const myModal = new bootstrap.Modal(document.getElementById('updateProductModal'));
+                        myModal.show();
+                        // Kiểm tra tên
+                        if (name === "") {
+                            $("#errNameUpdate").text("Tên sản phẩm không được để trống");
+                            isValid = false;
+                        }
+
+                        // Kiểm tra giá
+                        if (price === "" || isNaN(price) || parseFloat(price) < 0) {
+                            $("#errPriceUpdate").text("Giá phải là số và không được âm");
+                            isValid = false;
+                        }
+                    }
                 }
-                else {
-                    Swal.fire({
-                        title: "Lỗi",
-                        text: "Cập nhật thất bại, vui lòng kiểm tra lại thông tin!",
-                        icon: "error"
-                    });
-                    const myModal = new bootstrap.Modal(document.getElementById('updateProductModal'));
-                    myModal.show();
-                }
-            }
-        });
+            });
+        }
     });
 
     //xu ly them the loai
@@ -296,13 +341,6 @@ $(() => {
             success: function (data) {
                 count++;
                 showNotification('Đã thêm ' + count + ' sản phẩm vào giỏ hàng')
-                ////thong bao ket qua
-                //Swal.fire({
-                //    title: "Product added to cart",
-                //    text: "You clicked the button!",
-                //    icon: "success"
-                //});
-                ////hien thi so luong san pham trong gio trong _FrontEnd.cshtml
                 showQuantityCart();
             }
         });

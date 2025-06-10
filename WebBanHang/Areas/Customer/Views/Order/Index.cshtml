@@ -25,55 +25,58 @@
 					</div>
 				}
 				<!-- Checkout -->
-				<form asp-action="ProcessOrder" method="post">
-					<div class="card shadow-0 border">
+				@if (SignInManager.IsSignedIn(User))
+				{
+					<form asp-action="ProcessOrder" method="post">
+						<div class="card shadow-0 border">
 
-						<div class="p-4">
-							<h5 class="card-title mb-3">Guest checkout</h5>
-							<div class="row">
-								<div class="col-6 mb-3">
-									<p class="mb-0">Full name</p>
-									<div class="form-outline">
-										<input type="text" asp-for="CustomerName" placeholder="Enter customer name"
-											   class="form-control" />
-										<span class="text-danger" asp-validation-for="CustomerName"></span>
+							<div class="p-4">
+								<h5 class="card-title mb-3">Guest checkout</h5>
+								<div class="row">
+									<div class="col-6 mb-3">
+										<p class="mb-0">Full name</p>
+										<div class="form-outline">
+											<input type="text" asp-for="CustomerName" placeholder="Enter customer name"
+												   class="form-control" />
+											<span class="text-danger" asp-validation-for="CustomerName"></span>
+										</div>
+									</div>
+									<div class="col-6 mb-3">
+										<p class="mb-0">Phone</p>
+										<div class="form-outline">
+											<input type="text" asp-for="Phone" value="" class="form-control" />
+											<span class="text-danger" asp-validation-for="Phone"></span>
+										</div>
+									</div>
+									<div class="col-6 mb-3">
+										<p class="mb-0">Address</p>
+										<div class="form-outline">
+											<input type="text" asp-for="Address" class="form-control" />
+											<span class="text-danger" asp-validation-for="Address"></span>
+										</div>
 									</div>
 								</div>
-								<div class="col-6 mb-3">
-									<p class="mb-0">Phone</p>
-									<div class="form-outline">
-										<input type="text" asp-for="Phone" value="" class="form-control" />
-										<span class="text-danger" asp-validation-for="Phone"></span>
-									</div>
+								<div class="float-end">
+									@if (SignInManager.IsSignedIn(User))
+									{
+										<button class="btn btn-light border">Cancel</button>
+										<button type="submit" class="btn btn-success shadow-0 border">Continue</button>
+									}
+									else
+									{
+										<p id="signInRequest" style="font-size: large; margin-top:10px; margin-bottom:0; color:red">
+											Vui lòng đăng nhập hoặc đăng ký để tiếp tục mua hàng
+										</p>
+										<div class="d-flex gap-2 mt-3">
+											<a href="/identity/account/register?returnUrl=@Context.Request.Path" class="btn btn-secondary shadow-0 text-nowrap">Đăng ký</a>
+											<a href="/identity/account/login?returnUrl=@Context.Request.Path" class="btn btn-primary shadow-0 text-nowrap">Đăng nhập</a>
+										</div>
+									}
 								</div>
-								<div class="col-6 mb-3">
-									<p class="mb-0">Address</p>
-									<div class="form-outline">
-										<input type="text" asp-for="Address" class="form-control" />
-										<span class="text-danger" asp-validation-for="Address"></span>
-									</div>
-								</div>
-							</div>
-							<div class="float-end">
-								@if (SignInManager.IsSignedIn(User))
-								{
-									<button class="btn btn-light border">Cancel</button>
-									<button type="submit" class="btn btn-success shadow-0 border">Continue</button>
-								}
-								else
-								{
-									<p id="signInRequest" style="font-size: large; margin-top:10px; margin-bottom:0; color:red">
-										Vui lòng đăng nhập hoặc đăng ký để tiếp tục mua hàng
-									</p>
-									<div class="d-flex gap-2 mt-3">
-										<a href="/identity/account/register?returnUrl=@Context.Request.Path" class="btn btn-secondary shadow-0 text-nowrap">Đăng nhập</a>
-										<a href="/identity/account/login?returnUrl=@Context.Request.Path" class="btn btn-primary shadow-0 text-nowrap">Đăng ký</a>
-									</div>
-								}
 							</div>
 						</div>
-					</div>
-				</form>
+					</form>
+				}
 				<!-- Checkout -->
 			</div>
 			@{

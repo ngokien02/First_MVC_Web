@@ -13,6 +13,6 @@ namespace WebBanHang.Areas.Customer.Models
 		[Required(ErrorMessage = "Vui lòng nhập số điện thoại liên hệ")]
 		public string Phone { get; set; }
 		public double Total { set; get; }
-		public string State { set; get; }
+		public string? State { set; get; }
 	}
 }
