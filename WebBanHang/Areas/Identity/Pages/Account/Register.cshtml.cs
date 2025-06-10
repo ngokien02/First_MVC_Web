@@ -18,6 +18,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.WebUtilities;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Microsoft.Extensions.Logging;
 using WebBanHang.Models;
 
@@ -122,7 +123,9 @@ namespace WebBanHang.Areas.Identity.Pages.Account
                 .Select(i => new SelectListItem { Text = i, Value = i })
             };
 
-            ReturnUrl = returnUrl;
+			Input.Role = "customer";
+
+			ReturnUrl = returnUrl;
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
         }
 
