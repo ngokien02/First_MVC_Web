@@ -54,6 +54,9 @@ $(() => {
     $('#updateProductModal').on('shown.bs.modal', function () {
         $('#myInput').trigger('focus');
     });
+    $('#UpdateCategoryModal').on('shown.bs.modal', function () {
+        $('#myInput').trigger('focus');
+    });
 
     //bien toan cuc xu ly load trang
     var urlSP = "/admin/product?page=1";
@@ -203,6 +206,66 @@ $(() => {
                 }
             }
         });
+    });
+
+    //xu ly hien modal cap nhat the loai
+    $(document).on("click", "#btnUpdateCategory", function () {
+        var url = $(this).attr("href");
+        $.get(url, function (data) {
+            $("#UpdateCategoryModalBody").html(data);
+        })
+    })
+
+    //xu ly cap nhat the loai
+    $(document).on("click", "#btnUpdateTL", function (e) {
+
+        e.preventDefault();
+        var updateForm = document.forms.UpdateCategoryForm;
+        var formData = new FormData(updateForm);
+
+        $("#errNameUpdateTL").text('');
+        $("#errDisUpdateTL").text('');
+
+        const name = $('input[name="Name"]').val().trim();
+        const displayOrder = $('input[name="DisplayOrder"]').val().trim();
+
+        let isValid = true;
+
+        if (isValid) {
+
+            $.ajax({
+                method: "POST",
+                url: "/admin/category/update",
+                data: formData,
+
+                contentType: false,
+                processData: false,
+
+                success: function (data) {
+                    if (data) {
+                        loadPage(urlTL);
+                    }
+                    else {
+                        Swal.fire({
+                            title: "Lỗi",
+                            text: "Cập nhật thất bại, vui lòng kiểm tra lại thông tin!",
+                            icon: "error"
+                        });
+                        const myModal = new bootstrap.Modal(document.getElementById('UpdateCategoryModal'));
+                        myModal.show();
+                        // Kiểm tra tên
+                        if (name === "") {
+                            $("#errNameUpdateTL").text("Tên thể loại không được để trống");
+                            isValid = false;
+                        }
+                        if (displayOrder === "") {
+                            $("#errDisUpdateTL").text("Thứ tự hiển thị không được để trống");
+                            isValid = false;
+                        }
+                    }
+                }
+            });
+        }
     });
 
     //xu ly phan trang san pham

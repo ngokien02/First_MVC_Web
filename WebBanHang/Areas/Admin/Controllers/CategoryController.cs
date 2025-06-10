@@ -32,6 +32,7 @@ namespace WebBanHang.Areas.Admin.Controllers
             return false;
         }
         //Hiển thị form cập nhật chủng loại
+        [HttpGet]
         public IActionResult Update(int id)
         {
             var category = _db.Categories.Find(id);
@@ -39,20 +40,21 @@ namespace WebBanHang.Areas.Admin.Controllers
             {
                 return NotFound();
             }
-            return View(category);
+            return PartialView("_UpdateCategoryModal", category);
         }
         // Xử lý cập nhật chủng loại
         [HttpPost]
-        public IActionResult Update(Category category)
+        public bool Update(Category category)
         {
             if (ModelState.IsValid) //kiem tra hop le
             {
                 //cập nhật category vào table Categories
                 _db.Categories.Update(category);
                 _db.SaveChanges();
-                return RedirectToAction("Index");
+                TempData["success"] = "Cập nhật thể loại thành công!";
+                return true;
             }
-            return View();
+            return false;
         }
         // Xử lý xóa chủng loại
         public bool DeleteConfirm(int id)

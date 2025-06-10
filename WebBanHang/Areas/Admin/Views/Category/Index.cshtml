@@ -28,9 +28,9 @@
 				<td>@x.Name</td>
 				<td>@x.DisplayOrder</td>
 				<td>
-					<a asp-action="Update" asp-route-id="@x.Id" class="btn btn-primary">
-						<i class="bi bi-pencil-square"></i> Sửa
-					</a>
+					<button href="/admin/category/update?id=@x.Id" id="btnUpdateCategory" type="button" class="btn btn-primary manageBtn" data-bs-toggle="modal" data-bs-target="#UpdateCategoryModal">
+						<i class="bi bi-plus-circle-fill"></i> Sửa
+					</button>
 					<button Id="@x.Id" class="btn btn-danger btnDeleteTL">
 						<i class="bi bi-trash"></i> Xóa
 					</button>
@@ -42,3 +42,9 @@
 
 <p id="thongBaoXoaTL" style="font-size: x-large; margin-top:10px; margin-bottom:0;"></p>
 
+<div class="modal fade" id="UpdateCategoryModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<div class="modal-dialog modal-lg">
+		<div class="modal-content" id="UpdateCategoryModalBody">
+		</div>
+	</div>
+</div>
