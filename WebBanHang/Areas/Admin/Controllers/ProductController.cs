@@ -7,6 +7,7 @@ using WebBanHang.Models;
 namespace WebBanHang.Areas.Admin.Controllers
 {
 	[Area("Admin")]
+	[Authorize(Roles = "Admin")]
 	public class ProductController : Controller
 	{
 		private readonly ApplicationDbContext _db;

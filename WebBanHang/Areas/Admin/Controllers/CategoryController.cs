@@ -5,7 +5,8 @@ using WebBanHang.Models;
 namespace WebBanHang.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    public class CategoryController : Controller
+	[Authorize(Roles = "Admin")]
+	public class CategoryController : Controller
     {
         private readonly ApplicationDbContext _db;
         public CategoryController(ApplicationDbContext db)

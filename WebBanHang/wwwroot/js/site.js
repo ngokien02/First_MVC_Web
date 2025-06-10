@@ -187,25 +187,44 @@ $(() => {
         e.preventDefault();
         var formData = new FormData(this);
 
-        $.ajax({
-            method: "POST",
-            url: "/admin/Category/Add",
-            data: formData,
+        $("#errNameAddTL").text('');
+        $("#errDisAddTL").text('');
 
-            contentType: false,
-            processData: false,
+        const name = $('input[name="Name"]').val().trim();
+        const displayOrder = $('input[name="DisplayOrder"]').val().trim();
 
-            success: function (data) {
-                if (data) {
-                    $("p#thongBaoTL").text("Thêm 1 thể loại thành công!");
-                    loadPage(urlTL);
-                    $("#addCategoryForm")[0].reset();
+        let isValid = true;
+
+        if (isValid) {
+
+            $.ajax({
+                method: "POST",
+                url: "/admin/Category/Add",
+                data: formData,
+
+                contentType: false,
+                processData: false,
+
+                success: function (data) {
+                    if (data) {
+                        $("p#thongBaoTL").text("Thêm 1 thể loại thành công!");
+                        loadPage(urlTL);
+                        $("#addCategoryForm")[0].reset();
+                    }
+                    else {
+                        $("p#thongBaoTL").text("Thêm thể loại thất bại, vui lòng kiểm tra lại thông tin!");
+                        if (name === "") {
+                            $("#errNameAddTL").text("Tên thể loại không được để trống");
+                            isValid = false;
+                        }
+                        if (displayOrder === "") {
+                            $("#errDisAddTL").text("Thứ tự hiển thị không được để trống");
+                            isValid = false;
+                        }
+                    }
                 }
-                else {
-                    $("p#thongBaoTL").text("Thêm thể loại thất bại, vui lòng kiểm tra lại thông tin!");
-                }
-            }
-        });
+            });
+        }
     });
 
     //xu ly hien modal cap nhat the loai
