@@ -32,7 +32,8 @@
 					<p style="margin-top:1rem;">@p.Price.ToString("N0") vnđ</p>
 					<div class="card-body">
 						<a href="#" class="btn btn-secondary">Chi tiết</a>
-						<a href="#" class="btn btn-danger">Thêm vào giỏ</a>
+						<a class="addtocart btn btn-danger" data-productId="@p.Id" asp-action="AddToCart" asp-controller="Cart"
+						   asp-route-productId="@p.Id">Thêm vào giỏ</a>
 					</div>
 				</div>
 			</div>
